@@ -54,7 +54,9 @@ class _LoginPageState extends State<LoginPage> {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setString('name', data.name.toString());
                 await prefs.setString('password', data.password.toString());
-                
+                // final String? action = prefs.getString('name');
+                //       print('user.name is ${action}');
+               
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
               }
