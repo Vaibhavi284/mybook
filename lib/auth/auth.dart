@@ -3,9 +3,12 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_login/flutter_login.dart';
-import 'package:mybook/components/screen.dart';
+import 'package:mybook/components/provider.dart';
+import 'package:mybook/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class LoginPage extends StatefulWidget {
   const LoginPage({super.key});
@@ -17,6 +20,7 @@ class LoginPage extends StatefulWidget {
 class _LoginPageState extends State<LoginPage> {
   final _auth = FirebaseAuth.instance;
   final newuser = null;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -36,7 +40,8 @@ class _LoginPageState extends State<LoginPage> {
               });
               final prefs = await SharedPreferences.getInstance();
               await prefs.setString('name', data.name.toString());
-              await prefs.setString('password', data.password.toString());
+              await prefs.setString('password', data.name.toString());
+
               if (newuser != null) {
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
@@ -53,10 +58,7 @@ class _LoginPageState extends State<LoginPage> {
               if (user != null) {
                 final prefs = await SharedPreferences.getInstance();
                 await prefs.setString('name', data.name.toString());
-                await prefs.setString('password', data.password.toString());
-                // final String? action = prefs.getString('name');
-                //       print('user.name is ${action}');
-               
+                await prefs.setString('password', data.name.toString());
                 Navigator.push(context,
                     MaterialPageRoute(builder: (context) => const MyApp()));
               }

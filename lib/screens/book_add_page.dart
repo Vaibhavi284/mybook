@@ -2,14 +2,9 @@
 
 import 'package:flutter/material.dart';
 import 'package:mybook/components/constant.dart';
-// import 'package:flutter/material.dart';
-// import 'package:mybook/auth/login.dart';
-// import 'package:scroll_navigation/scroll_navigation.dart';
-// import 'package:hive/hive.dart';
-// import 'package:hive_flutter/hive_flutter.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:fluttertoast/fluttertoast.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+import 'package:mybook/components/provider.dart';
 
 class bookaddscreen extends StatefulWidget {
   const bookaddscreen({super.key});
@@ -24,54 +19,17 @@ class _bookaddscreenState extends State<bookaddscreen> {
   late String short_discription;
   late String long_discription;
   final db = FirebaseFirestore.instance;
-  final prefs = SharedPreferences.getInstance();
-
-  // get current => null;
-  var current_user = 'seenuthiruvpm@gmail.com';
-  adddata() async {
-    shareget();
-    // FirebaseFirestore.instance.collection("events").doc(book_name).set({
-    //   'book_name': book_name,
-    //   'author_name': author_name,
-    //   'short_discription': short_discription,
-    //   'long_discription': long_discription,
-
-    // });
-
-    final dataget =
-        await FirebaseFirestore.instance.collection("events").doc("data").get();
-    final unitdata = dataget.data() as Map<String, dynamic>;
-    print(dataget['book_name']);
-  }
-
-  Future<String?> shareget() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final String? username = prefs.getString('name');
-    setState(() {
-      final user_name = username;
-    });
-    FirebaseFirestore.instance.collection("events").doc(book_name).set({
-      'poster_name': username,
+  Future<String?> adddata() async {
+    FirebaseFirestore.instance.collection("books").doc(book_name).set({
+      'poster_name': Getcurrentuser.user,
       'book_name': book_name,
       'author_name': author_name,
       'short_discription': short_discription,
       'long_discription': long_discription,
     });
-    return username;
+    Navigator.of(context).pop();
   }
 
-  Future<String> getuser() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final String? user = prefs.getString('name');
-    setState(() {
-      var current_user = user;
-    });
-    return user.toString();
-  }
-
-  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -143,7 +101,11 @@ class _bookaddscreenState extends State<bookaddscreen> {
               const SizedBox(
                 height: 30.0,
               ),
-              ElevatedButton(onPressed: adddata, child: Text('save')),
+              ElevatedButton(
+                  onPressed: () {
+                    adddata();
+                  },
+                  child: Text('save')),
             ],
           ),
         ),

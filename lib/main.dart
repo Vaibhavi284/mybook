@@ -3,9 +3,9 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:mybook/auth/login.dart';
+import 'package:mybook/auth/auth.dart';
 import 'package:mybook/components/provider.dart';
-import 'package:mybook/components/screen.dart';
+import 'package:mybook/screens/home_screen.dart';
 import 'package:scroll_navigation/scroll_navigation.dart';
 import 'package:hive/hive.dart';
 import 'package:hive_flutter/hive_flutter.dart';
@@ -24,7 +24,7 @@ void main() async {
 ChangeNotifierProvider(create: (_) => Getcurrentuser())
 
   ],
-  child: MaterialApp(home: MyApp()),
+  child: MaterialApp(home: LoginPage()),
   ));
 }
 

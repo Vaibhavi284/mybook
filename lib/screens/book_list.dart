@@ -1,71 +1,29 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:mybook/components/constant.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:mybook/components/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:provider/provider.dart';
-class mybooklist extends StatefulWidget {
-  const mybooklist({super.key});
+
+class booklist extends StatefulWidget {
+  const booklist({super.key});
 
   @override
-  State<mybooklist> createState() => _mybooklistState();
+  State<booklist> createState() => _booklistState();
 }
 
-class _mybooklistState extends State<mybooklist> {
+class _booklistState extends State<booklist> {
   final db = FirebaseFirestore.instance;
-  final prefs = SharedPreferences.getInstance();
-
-//  Future<String> getuser()async{
-//  final prefs = await SharedPreferences.getInstance();
-
-//                     final String? user = prefs.getString('name');
-//                     setState(() {
-//                       var current_user= user;
-
-//                     });
-//                     return user.toString();
-
-// }
-  getuser() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    final String? user = prefs.getString('name');
-    setState(() {
-      var current_user = user;
-    });
-    print(user);
-    return user.toString();
-  }
-// @override
-// void initState(){
-//   super.initState();
-// getuser();
-
-// }
-
   @override
   Widget build(BuildContext context) {
-    // var current_user = getuser().toString();
-    // var current = Provider.of<Getcurrentuser> (context).getuser();
-    var current = Provider.of<Getcurrentuser> (context);
-    var current_user =current.getuser().toString();
     return Scaffold(
       appBar: AppBar(
-        title: const Text('My Books List'),
+        title: const Text('Books List'),
         centerTitle: true,
       ),
       body: Column(
         children: [
           Expanded(
             child: StreamBuilder<QuerySnapshot>(
-              // stream: db.collection('events').snapshots(),
-
-              stream: db
-                  .collection('events')
-                  .where("poster_name", isEqualTo: current_user)
-                  .snapshots(),
+              stream: db.collection('books').snapshots(),
               builder: (context, snapshot) {
                 if (!snapshot.hasData) {
                   return const Center(
@@ -83,7 +41,7 @@ class _mybooklistState extends State<mybooklist> {
                           trailing: IconButton(
                               onPressed: () async {
                                 await FirebaseFirestore.instance
-                                    .collection("events")
+                                    .collection("books")
                                     .doc(doc['book_name'])
                                     .delete();
                               },
@@ -153,6 +111,18 @@ class _mybooklistState extends State<mybooklist> {
                                           const SizedBox(
                                             height: 35,
                                           ),
+                                           const Text(
+                                            "Posted by",
+                                            style: TextStyle(fontSize: 24),
+                                          ),
+                                          const SizedBox(
+                                            height: 27,
+                                          ),
+                                          Text(doc['poster_name']),
+                                          const SizedBox(
+                                            height: 35,
+                                          ),
+                                         
                                         ],
                                       ),
                                     ),

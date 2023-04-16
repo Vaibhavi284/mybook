@@ -1,22 +1,21 @@
-
-
-
-
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class Getcurrentuser with ChangeNotifier{
+class Getcurrentuser with ChangeNotifier, DiagnosticableTreeMixin {
+  static String? user = "";
+  static String? password= "";
 
- Future<dynamic> getuser() async {
+  String? get userName => user;
+
+  void getuser() async {
     final prefs = await SharedPreferences.getInstance();
 
-    final String? user = prefs.getString('name');
+    user = prefs.getString('name');
+    password = prefs.getString('password');
+
     
-    print(user);
-    
+
     notifyListeners();
-   return user;
   }
-
-
 }
