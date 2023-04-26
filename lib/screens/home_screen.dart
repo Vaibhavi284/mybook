@@ -98,15 +98,15 @@ class _MyAppState extends State<MyApp> {
                       const SizedBox(
                         height: 20,
                       ),
-                        ListTile(
-                        title: const Text('chat'),
-                        onTap: () {
-                          Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                  builder: (context) => const chatscreen()));
-                        },
-                      ),
+                      //   ListTile(
+                      //   title: const Text('chat'),
+                      //   onTap: () {
+                      //     Navigator.push(
+                      //         context,
+                      //         MaterialPageRoute(
+                      //             builder: (context) => const chatscreen()));
+                      //   },
+                      // ),
                       const SizedBox(
                         height: 20,
                       ),
